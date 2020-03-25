@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="nav">
+      <router-link to="/" class="nav-link">Home</router-link>
+      <router-link to="/brazil" class="nav-link">Brazil</router-link>
+      <router-link to="/hawaii" class="nav-link">Hawaii</router-link>
+      <router-link to="/jamaica" class="nav-link">Jamaica</router-link>
+      <router-link to="/panama" class="nav-link">Panama</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  name: 'App'
 }
 </script>
 
@@ -25,4 +27,8 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+  .nav-link {
+    padding: 10px;
+  }
 </style>
