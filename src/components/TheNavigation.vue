@@ -20,15 +20,19 @@
                     {{destination.name}}
                 </router-link>
             </li>
+            <li class="links">
+                <router-link to="/user">Dashboard</router-link>
+            </li>
         </ul>
     </nav>
 </template>
 
 <script>
     import store from "../store";
+
     export default {
         data() {
-            return{
+            return {
                 destinations: store.destinations
             }
         }

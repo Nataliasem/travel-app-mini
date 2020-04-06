@@ -3,23 +3,21 @@ import Router from 'vue-router'
 import Home from './views/Home'
 import store from './store'
 
-
-
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     scrollBehavior(to, from, savedPosition) {
-        if(savedPosition){
+        if (savedPosition) {
             return savedPosition
         } else {
             let position = {};
-            if (to.hash){
+            if (to.hash) {
                 position.selector = to.hash;
                 if (to.hash === "#experience") {
-                    position.offset = { y: 140};
+                    position.offset = {y: 140};
                 }
-                if(document.querySelector(to.hash)){
+                if (document.querySelector(to.hash)) {
                     return position;
                 }
                 return false;
@@ -48,9 +46,9 @@ export default new Router({
             ],
             beforeEnter: (to, from, next) => {
                 let exists = store.destinations.find(
-                  destination => destination.slug === to.params.slug
+                    destination => destination.slug === to.params.slug
                 );
-                if(exists){
+                if (exists) {
                     next()
                 } else {
                     next({name: "notFound"})
@@ -58,10 +56,50 @@ export default new Router({
             }
         },
         {
-            path: "404",
-            alias: "*",
-            name: "notFound",
+            path: '/user',
+            name: 'user',
+            component: () => import(/*webpackChunkName: 'User'*/ './views/User'),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: () => import(/*webpackChunkName: 'Login'*/ './views/Login'),
+        },
+        {
+            path: "/invoices",
+            name: "invoices",
+            component: () =>
+                import(/* webpackChunkName: "Invoices" */ "./views/Invoices"),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '404',
+            alias: '*',
+            name: 'notFound',
             component: () => import(/*webpackChunkName: 'NotFound'*/ './views/NotFound')
         }
     ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!store.user) {
+            next({
+                name: 'login',
+                query: {redirect: to.fullPath}
+            })
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
+
+export default router;
