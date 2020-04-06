@@ -1,21 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/" class="nav-link">Home</router-link>
-      <router-link to="/brazil" class="nav-link">Brazil</router-link>
-      <router-link to="/hawaii" class="nav-link">Hawaii</router-link>
-      <router-link to="/jamaica" class="nav-link">Jamaica</router-link>
-      <router-link to="/panama" class="nav-link">Panama</router-link>
-    </div>
-    <router-view/>
+    <TheNavigation />
+    <router-view :key="$route.path"/>
   </div>
 </template>
 
 <script>
+  import TheNavigation from './components/TheNavigation'
 
-export default {
-  name: 'App'
-}
+  export default {
+    components: {
+      TheNavigation
+    }
+  }
 </script>
 
 <style>
@@ -27,8 +24,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
-  .nav-link {
-    padding: 10px;
-  }
 </style>
