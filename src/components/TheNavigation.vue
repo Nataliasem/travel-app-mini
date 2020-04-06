@@ -39,6 +39,12 @@
     #nav {
         display: flex;
         justify-content: start;
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        border-bottom: 1px solid grey;
+        z-index: 1;
+
     }
 
     #nav a {
